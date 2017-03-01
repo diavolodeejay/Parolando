@@ -16,5 +16,12 @@ namespace Parolando
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Gioco a = new Gioco();
+            a.Gioca(2);
+            
+        }
     }
 }

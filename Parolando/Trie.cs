@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Parolando
 {
-
-    class TrieNode
+    internal class TrieNode
     {
         private TrieNode[] mlettere;
         private List<Parola> parole;
@@ -16,7 +12,7 @@ namespace Parolando
         {
             parole = data;
             mlettere = new TrieNode[26];
-            for(int a = 0; a < mlettere.Length; a++)
+            for (int a = 0; a < mlettere.Length; a++)
             {
                 mlettere[a] = null;
             }
@@ -45,10 +41,10 @@ namespace Parolando
         public void Insert(Parola insert, int pos = 0)
         {
             insert.key = insert.key.ToLower();
-            if(pos != insert.key.Length)
+            if (pos != insert.key.Length)
             {
                 int value = TrieNode.CharToInt(insert.key[pos]);
-                if(Lettere[value] == null)
+                if (Lettere[value] == null)
                 {
                     Lettere[value] = new TrieNode(new List<Parola>());
                 }
@@ -59,16 +55,15 @@ namespace Parolando
                 this.Parole.Add(insert);
             }
         }
-        
+
         public static int CharToInt(char v)
         {
             //ASCII
             return Convert.ToInt32(v) - 97;
         }
-
     }
 
-    class Trie
+    internal class Trie
     {
         private TrieNode groot;
 
@@ -93,6 +88,7 @@ namespace Parolando
         {
             Root.Insert(Valore);
         }
+
         /// <summary>
         /// Cerca tutte le parole possibili con le lettere che passo
         /// </summary>
@@ -106,21 +102,21 @@ namespace Parolando
             Parola p = new Parola(lettere);
             coda.Enqueue(groot);
 
-            foreach(char c in p.key)
+            foreach (char c in p.key)
             {
                 int l = coda.Count;
-                for(int i = 0; i < l; i++)
+                for (int i = 0; i < l; i++)
                 {
                     nodo = coda.Dequeue();
-                    if(nodo.Parole != null)
+                    if (nodo.Parole != null)
                     {
-                        foreach(Parola pp in nodo.Parole)
+                        foreach (Parola pp in nodo.Parole)
                         {
                             Trovati.Add(pp);
                         }
                     }
                     coda.Enqueue(nodo);
-                    if(nodo.Lettere[TrieNode.CharToInt(c)] != null)
+                    if (nodo.Lettere[TrieNode.CharToInt(c)] != null)
                     {
                         coda.Enqueue(nodo.Lettere[TrieNode.CharToInt(c)]);
                     }
@@ -129,6 +125,7 @@ namespace Parolando
             List<Parola> ris = Pulisci(Trovati);
             return ris;
         }
+
         /// <summary>
         /// Fa una pulizia dei doppioni
         /// </summary>
@@ -138,17 +135,17 @@ namespace Parolando
         {
             List<Parola> ris = new List<Parola>();
             bool agg = true;
-            foreach(Parola p in Trovati)
+            foreach (Parola p in Trovati)
             {
                 agg = true;
-                foreach(Parola pp in ris)
+                foreach (Parola pp in ris)
                 {
-                    if(pp.parola == p.parola)
+                    if (pp.parola == p.parola)
                     {
                         agg = false;
                     }
                 }
-                if(agg)
+                if (agg)
                 {
                     ris.Add(p);
                 }

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Parolando
+﻿namespace Parolando
 {
-    class Parola
+    internal class Parola
     {
         //La parola
         public string parola { get; set; }
+
         //Chiave della parola (le lettere in ordine alfabetico)
         public string key { get; set; }
 
@@ -30,15 +25,15 @@ namespace Parolando
         private string CalcolaChiave()
         {
             char[] chi = new char[parola.Length];
-            for(int a = 0; a < parola.Length; a++)
+            for (int a = 0; a < parola.Length; a++)
             {
                 chi[a] = parola[a];
             }
             int b = 0, c = 1;
             int lun = chi.Length - 1;
-            while(lun > 0)
+            while (lun > 0)
             {
-                while(c <= lun)
+                while (c <= lun)
                 {
                     if (chi[b] > chi[c])
                     {
