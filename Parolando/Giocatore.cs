@@ -55,16 +55,15 @@ namespace Parolando
 
         public string Pensa(Trie albero, char[] Generata)
         {
-            List<Parola> ris = albero.Cerca(string.Join("",sacchetto));
+            List<Parola> ris = albero.Cerca(string.Join("", sacchetto));
             List<Parola> copy = new List<Parola>();
-            foreach(Parola pp in ris)
+            foreach (Parola pp in ris)
             {
                 copy.Add(pp);
             }
             foreach (Parola p in ris)
             {
-                //TODO : METTI ||
-                if (p.parola.Length > 8 && p.parola.Length == 1)
+                if (p.parola.Length > 8 || p.parola.Length == 1)
                 {
                     copy.Remove(p);
                     continue;
@@ -85,15 +84,15 @@ namespace Parolando
                 }
             }
             ris.Clear();
-            foreach(Parola p in copy)
+            foreach (Parola p in copy)
             {
                 ris.Add(p);
             }
-            if(ris.Count == 0 && !mulligato)
+            if (ris.Count == 0 && !mulligato)
             {
                 return null;
             }
-            else if(mulligato == true)
+            else if (mulligato == true)
             {
                 ris = RicercaCorta(albero, Generata);
             }
@@ -109,11 +108,24 @@ namespace Parolando
                 Parola p = parole[a];
                 foreach (char c in p.parola)
                 {
-                    Punti[a] += Gioco.ConvertiInPunti(c);
+                    Punti[a] += Form1.ConvertiInPunti(c);
                 }
             }
-            int max = Punti.Max();
+            int max = 0;
+            try
+            {
+                max = Punti.Max();
+            }
+            catch
+            {
+                return null;
+            }
             int indexMax = Punti.ToList().IndexOf(max);
+            
+            foreach(char cc in parole[indexMax].parola)
+            {
+                sacchetto.Remove(cc.ToString());
+            }
             return parole[indexMax].parola;
         }
 
@@ -126,24 +138,24 @@ namespace Parolando
 
         private List<Parola> RicercaCorta(Trie albero, char[] generata)
         {
-            List<Parola> ris = albero.Cerca(string.Join("",sacchetto));
+            List<Parola> ris = albero.Cerca(string.Join("", sacchetto));
             List<Parola> copy = new List<Parola>();
-            foreach(Parola pp in ris)
+            foreach (Parola pp in ris)
             {
                 copy.Add(pp);
             }
             int pos = 0;
-            for(int a = 0; a < generata.Length; a++)
+            for (int a = 0; a < generata.Length; a++)
             {
-                if(generata[a] != '\0')
+                if (generata[a] != '\0')
                 {
                     pos = a;
                 }
             }
             pos++;
-            foreach(Parola p in ris)
+            foreach (Parola p in ris)
             {
-                if(p.parola.Length > pos)
+                if (p.parola.Length > pos || p.parola.Length == 1)
                 {
                     copy.Remove(p);
                     continue;
