@@ -10,6 +10,7 @@ namespace Parolando
         private string mNome;
         public List<string> sacchetto;
         private int mPunti;
+        private bool mulligato = false;
 
         public string Nome
         {
@@ -54,15 +55,18 @@ namespace Parolando
 
         public string Pensa(Trie albero, char[] Generata)
         {
-            //TODO: 
-            //-Mulligan
-            //-Se anche dopo mulligan non ho niente, taglio tutte le parole più lunghe o uguali alla posizione della lettera bonus e penso intensamente.
-            List<Parola> ris = albero.Cerca(sacchetto.ToString());
+            List<Parola> ris = albero.Cerca(string.Join("",sacchetto));
+            List<Parola> copy = new List<Parola>();
+            foreach(Parola pp in ris)
+            {
+                copy.Add(pp);
+            }
             foreach (Parola p in ris)
             {
+                //TODO : METTI ||
                 if (p.parola.Length > 8 && p.parola.Length == 1)
                 {
-                    ris.Remove(p);
+                    copy.Remove(p);
                     continue;
                 }
                 char[] tmp = p.parola.ToArray();
@@ -76,9 +80,22 @@ namespace Parolando
                 }
                 if (compatibile == false)
                 {
-                    ris.Remove(p);
+                    copy.Remove(p);
                     continue;
                 }
+            }
+            ris.Clear();
+            foreach(Parola p in copy)
+            {
+                ris.Add(p);
+            }
+            if(ris.Count == 0 && !mulligato)
+            {
+                return null;
+            }
+            else if(mulligato == true)
+            {
+                ris = RicercaCorta(albero, Generata);
             }
             string r = PensaDiPiu(ris);
             return r;
@@ -98,6 +115,46 @@ namespace Parolando
             int max = Punti.Max();
             int indexMax = Punti.ToList().IndexOf(max);
             return parole[indexMax].parola;
+        }
+
+        public void Mulligan()
+        {
+            this.Punti -= 5;
+            this.sacchetto.Clear();
+            this.mulligato = true;
+        }
+
+        private List<Parola> RicercaCorta(Trie albero, char[] generata)
+        {
+            List<Parola> ris = albero.Cerca(string.Join("",sacchetto));
+            List<Parola> copy = new List<Parola>();
+            foreach(Parola pp in ris)
+            {
+                copy.Add(pp);
+            }
+            int pos = 0;
+            for(int a = 0; a < generata.Length; a++)
+            {
+                if(generata[a] != '\0')
+                {
+                    pos = a;
+                }
+            }
+            pos++;
+            foreach(Parola p in ris)
+            {
+                if(p.parola.Length > pos)
+                {
+                    copy.Remove(p);
+                    continue;
+                }
+            }
+            /*ris.Clear();
+            foreach(Parola pp in copy)
+            {
+                ris.Add(pp);
+            }*/
+            return copy;
         }
     }
 }

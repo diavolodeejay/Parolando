@@ -12,6 +12,7 @@ namespace Parolando
 {
     public partial class Form1 : Form
     {
+        Gioco a = new Gioco();
         public Form1()
         {
             InitializeComponent();
@@ -19,9 +20,14 @@ namespace Parolando
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Gioco a = new Gioco();
+
             a.Gioca(2);
             
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            a.Carica();
         }
     }
 }

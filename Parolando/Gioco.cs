@@ -1,17 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace Parolando
 {
     internal class Gioco
     {
-        private Trie albero = new Trie();
+        private Trie albero;
         private Random rnd = new Random();
 
-        //TODO: Popola albero dall'XML
         //TODO: Sposta sta cosa in Form1
         //TODO: GUI
         private Giocatore[] players;
+
+        public void Carica()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load("italian.xml");
+            albero = new Trie();
+            foreach(XmlNode nodo in doc.DocumentElement.ChildNodes)
+            {
+                if (nodo.Name.Equals("word"))
+                {
+                    Parola tmp = new Parola(nodo.InnerText.ToString());
+                    albero.InsertNode(tmp);
+                  //  Console.WriteLine(tmp.parola.ToString());
+                }
+            }
+            Console.WriteLine("fine");
+        }
 
         public void Gioca(int numeroPlayers)
         {
@@ -49,19 +66,40 @@ namespace Parolando
                         posizioneBonus = a;
                     }
                 }
-
+                int punti = 0;
                 players[gioc].Pesca(sacca);
                 string parolaInserita = players[gioc].Pensa(albero, stringaGenerata);
-                int punti = CalcolaPunti(parolaInserita, posizioneBonus, Bonus);
-                players[gioc].Punti += punti;
+                if(parolaInserita == null)
+                {
+                    players[gioc].Mulligan();
+                    players[gioc].Pesca(sacca);
+                    parolaInserita = players[gioc].Pensa(albero, stringaGenerata);
+                    if(parolaInserita == null)
+                    {
+                        punti = 0;
+                    }
+                    else
+                    {
+                        punti = CalcolaPunti(parolaInserita, posizioneBonus, Bonus);
+                        players[gioc].Punti += punti;
+                    }
+                }
+                else
+                {
+                    punti = CalcolaPunti(parolaInserita, posizioneBonus, Bonus);
+                    players[gioc].Punti += punti;
+                }
+                Console.WriteLine("Turno {0}. Gioca il giocatore {1}.",t, gioc);
+                Console.WriteLine("Il giocatore ha creato la parola {0} e ha guadagnato {1} punti", parolaInserita, punti);
+                Console.WriteLine("-------");
 
                 gioc++;
-                if (gioc > numeroPlayers)
+                if (gioc >= numeroPlayers)
                 {
                     gioc = 0;
                 }
             }
-
+            FinePartita();
         }
 
         public char[] GeneraTurno()
@@ -79,6 +117,21 @@ namespace Parolando
             ris[bonus] = '!';
             ris[p] = r;
             return ris;
+        }
+
+        void FinePartita()
+        {
+            int max = 0;
+            string NomeVincitore = "";
+            foreach(Giocatore g in players)
+            {
+                if(g.Punti > max)
+                {
+                    max = g.Punti;
+                    NomeVincitore = g.Nome;
+                }
+            }
+            Console.WriteLine("Ha vinto il giocatore {0} con {1} punti!", NomeVincitore, max);
         }
 
         private int CalcolaPunti(string parola, int posizioneBonus, int Bonus)
@@ -106,5 +159,6 @@ namespace Parolando
             int ris = Converti[c];
             return ris;
         }
+
     }
 }

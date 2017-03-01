@@ -40,7 +40,7 @@ namespace Parolando
 
         public void Insert(Parola insert, int pos = 0)
         {
-            insert.key = insert.key.ToLower();
+            //insert.key = insert.key.ToLower();
             if (pos != insert.key.Length)
             {
                 int value = TrieNode.CharToInt(insert.key[pos]);
@@ -48,7 +48,7 @@ namespace Parolando
                 {
                     Lettere[value] = new TrieNode(new List<Parola>());
                 }
-                Lettere[value].Insert(insert, pos++);
+                Lettere[value].Insert(insert, pos = pos + 1);
             }
             else
             {
