@@ -9,6 +9,8 @@ namespace Parolando
         private Random rnd = new Random();
 
         //TODO: Popola albero dall'XML
+        //TODO: Sposta sta cosa in Form1
+        //TODO: GUI
         private Giocatore[] players;
 
         public void Gioca(int numeroPlayers)

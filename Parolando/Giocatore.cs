@@ -54,6 +54,9 @@ namespace Parolando
 
         public string Pensa(Trie albero, char[] Generata)
         {
+            //TODO: 
+            //-Mulligan
+            //-Se anche dopo mulligan non ho niente, taglio tutte le parole più lunghe o uguali alla posizione della lettera bonus e penso intensamente.
             List<Parola> ris = albero.Cerca(sacchetto.ToString());
             foreach (Parola p in ris)
             {
