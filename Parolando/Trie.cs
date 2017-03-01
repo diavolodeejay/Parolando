@@ -8,6 +8,7 @@ namespace Parolando
         private TrieNode[] mlettere;
         private List<Parola> parole;
 
+        //Costruttore del nodo
         public TrieNode(List<Parola> data)
         {
             parole = data;
@@ -40,14 +41,18 @@ namespace Parolando
 
         public void Insert(Parola insert, int pos = 0)
         {
-            //insert.key = insert.key.ToLower();
+            //non si sa mai
+            insert.key = insert.key.ToLower();
+            //la lunghezza della parola è uguale alla profondità dell'albero
             if (pos != insert.key.Length)
             {
+                //la posizione nell'array è fisso per ogni lettera, quindi se ho la lattera A dovrò andare nel Nodo 0
                 int value = TrieNode.CharToInt(insert.key[pos]);
                 if (Lettere[value] == null)
                 {
                     Lettere[value] = new TrieNode(new List<Parola>());
                 }
+                //Ricorsioni!
                 Lettere[value].Insert(insert, pos = pos + 1);
             }
             else
@@ -56,6 +61,7 @@ namespace Parolando
             }
         }
 
+        //Converte il char in intero. Potere dell'ASCII
         public static int CharToInt(char v)
         {
             //ASCII

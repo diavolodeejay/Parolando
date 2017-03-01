@@ -31,7 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.StartBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.output = new System.Windows.Forms.Label();
+            this.Credits = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // StartBtn
@@ -56,21 +57,32 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Parolando!";
             // 
-            // label2
+            // output
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(148, 132);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 13);
-            this.label2.TabIndex = 2;
+            this.output.AutoSize = true;
+            this.output.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output.Location = new System.Drawing.Point(148, 132);
+            this.output.Name = "output";
+            this.output.Size = new System.Drawing.Size(0, 13);
+            this.output.TabIndex = 2;
+            // 
+            // Credits
+            // 
+            this.Credits.AutoSize = true;
+            this.Credits.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Credits.Location = new System.Drawing.Point(683, 52);
+            this.Credits.Name = "Credits";
+            this.Credits.Size = new System.Drawing.Size(159, 20);
+            this.Credits.TabIndex = 3;
+            this.Credits.Text = "By Gabriele Di Nuovo";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 595);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.Credits);
+            this.Controls.Add(this.output);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.StartBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -87,7 +99,8 @@
 
         private System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label output;
+        private System.Windows.Forms.Label Credits;
     }
 }
 
