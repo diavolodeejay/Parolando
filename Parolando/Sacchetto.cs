@@ -5,7 +5,7 @@ namespace Parolando
 {
     internal class Sacchetto
     {
-        private string[] msacc = new string[128];
+        private string[] msacc = new string[138];
         public List<string> SacchettoPubblico;
 
         public Sacchetto()
@@ -40,11 +40,16 @@ namespace Parolando
                 msacc[a + 1] = "m";
                 msacc[a + 2] = "n";
             }
-            for (int a = 122; a < 128; a = a + 3)
+            for (int a = 122; a < 138; a = a + 8)
             {
                 msacc[a] = "h";
                 msacc[a + 1] = "q";
                 msacc[a + 2] = "z";
+                msacc[a + 3] = "j";
+                msacc[a + 4] = "k";
+                msacc[a + 5] = "x";
+                msacc[a + 6] = "y";
+                msacc[a + 7] = "z";
             }
             SacchettoPubblico = msacc.ToList<string>();
         }
