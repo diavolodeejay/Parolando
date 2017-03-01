@@ -7,30 +7,14 @@ namespace Parolando
 {
     public partial class Form1 : Form
     {
-
         public Form1()
         {
+            //Carica subito l'XML prima della GUI, in modo da avere il trie già fatto appena l'utente può interagire con il programma
             Carica();
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Gioca(2);
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private Trie albero;
-        private Random rnd = new Random();
-
-        //TODO: Sposta sta cosa in Form1
-        //TODO: GUI
-        private Giocatore[] players;
-
+        //Metodo che carica il file XML
         public void Carica()
         {
             XmlDocument doc = new XmlDocument();
@@ -42,29 +26,34 @@ namespace Parolando
                 {
                     Parola tmp = new Parola(nodo.InnerText.ToString());
                     albero.InsertNode(tmp);
-                    //  Console.WriteLine(tmp.parola.ToString());
                 }
             }
             Console.WriteLine("fine");
         }
 
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Fa partire la partita con 2 giocatori!
+            Gioca(2);
+        }
+
+        private Trie albero;
+        private Random rnd = new Random();
+        private Giocatore[] players;
+
+        //Fa avviare il gioco. 
         public void Gioca(int numeroPlayers)
         {
+            label2.Text = "Inizia il gioco...\n";
             Sacchetto sacca = new Sacchetto();
             players = new Giocatore[numeroPlayers];
             for (int count = 0; count < players.Length; count++)
             {
                 players[count] = new Giocatore(count.ToString());
             }
-            //metodo che fa fare a ogni giocatore la giocata
-            //-Una giocata consiste in
-            //--Pesca
-            //--Creazione campo, con lettera vincolante e casella bonus
-            //--Ricerca parole possibili tramite treenode.search
-            //--Filtraggio con parole davvero utilizzabili
-            //--Calcolo parola con punteggio più alto tra quelle utilizzabili
-            //--Inserimento parola
-
+            //Pescaggio iniziale
             for (int a = 0; a < numeroPlayers; a++)
             {
                 players[a].Pesca(sacca);
@@ -107,9 +96,21 @@ namespace Parolando
                     punti = CalcolaPunti(parolaInserita, posizioneBonus, Bonus);
                     players[gioc].Punti += punti;
                 }
-                Console.WriteLine("Turno {0}. Gioca il giocatore {1}.", t, gioc);
-                Console.WriteLine("Il giocatore ha creato la parola \"{0}\" e ha guadagnato {1} punti", parolaInserita, punti);
-                Console.WriteLine("-------");
+                label2.Text += "Turno " + t.ToString() + ". Gioca il giocatore " + (gioc + 1).ToString() + ".\n";
+                List<char> supert = new List<char>();
+                foreach(char c in stringaGenerata)
+                {
+                    if(c == '\0')
+                    {
+                        supert.Add('-');
+                    }
+                    else
+                    {
+                        supert.Add(c);
+                    }
+                }
+                label2.Text += "La lettera vincolante è " + string.Join(" ", supert) + " e la posizone bonus è " + posizioneBonus + " con un moltiplicatore di " + Bonus + " punti.\n";
+                label2.Text += "Il giocatore ha creato la parola \"" + parolaInserita + "\" e ha guadagnato " + punti.ToString() + " punti.\n\n";
 
                 gioc++;
                 if (gioc >= numeroPlayers)
@@ -122,7 +123,7 @@ namespace Parolando
 
         public char[] GeneraTurno()
         {
-            int n = rnd.Next(0, 27);
+            int n = rnd.Next(0, 26);
             n = n + 97;
             char r = Convert.ToChar(n);
             int p = rnd.Next(0, 8);
@@ -146,10 +147,10 @@ namespace Parolando
                 if (g.Punti > max)
                 {
                     max = g.Punti;
-                    NomeVincitore = g.Nome;
+                    NomeVincitore = (int.Parse(g.Nome)+1).ToString();
                 }
             }
-            Console.WriteLine("Ha vinto il giocatore {0} con {1} punti!", NomeVincitore, max);
+            label2.Text += "Ha vinto il giocatore " + NomeVincitore + " con " + max.ToString() + " punti!\n";
         }
 
         private int CalcolaPunti(string parola, int posizioneBonus, int Bonus)

@@ -61,6 +61,16 @@ namespace Parolando.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;words&gt;
         ///	&lt;word&gt;a&lt;/word&gt;

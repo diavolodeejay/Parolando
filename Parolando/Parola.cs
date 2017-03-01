@@ -1,4 +1,4 @@
-﻿namespace Parolando
+﻿    namespace Parolando
 {
     internal class Parola
     {

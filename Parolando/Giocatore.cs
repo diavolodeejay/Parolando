@@ -155,7 +155,7 @@ namespace Parolando
             pos++;
             foreach (Parola p in ris)
             {
-                if (p.parola.Length > pos || p.parola.Length == 1)
+                if (p.parola.Length >= pos || p.parola.Length == 1)
                 {
                     copy.Remove(p);
                     continue;
