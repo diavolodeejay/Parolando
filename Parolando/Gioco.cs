@@ -10,7 +10,6 @@ namespace Parolando
     {
         //Per comicare con il form!
         public EventHandler Comunica;
-
         //Metodo che carica il file XML
         public void Carica()
         {
@@ -67,6 +66,8 @@ namespace Parolando
                 }
                 //fa pescare al giocatore
                 int punti = 0;
+                //Tramite gli eventi comunico con il form
+                ComunicaConForm(new StringEventArgs("Turno " + (t + 1).ToString() + ". Gioca il giocatore " + (gioc + 1).ToString() + ".\n"));
                 players[gioc].Pesca(sacca);
                 //Fa pensare al giocatore la parola
                 string parolaInserita = players[gioc].Pensa(albero, stringaGenerata);
@@ -76,6 +77,7 @@ namespace Parolando
                     //se il giocatore può scambiare tutte le lettere allora lo fa
                     if (players[gioc].mulligato == false)
                     {
+                        ComunicaConForm(new StringEventArgs("Il Giocatore ha ripescato nuove lettere!\n"));
                         players[gioc].Mulligan();
                         players[gioc].Pesca(sacca);
                         parolaInserita = players[gioc].Pensa(albero, stringaGenerata);
@@ -98,8 +100,6 @@ namespace Parolando
                     punti = CalcolaPunti(parolaInserita, posizioneBonus, Bonus);
                     players[gioc].Punti += punti;
                 }
-                //Tramite gli eventi comunico con il form
-                ComunicaConForm(new StringEventArgs("Turno " + (t + 1).ToString() + ". Gioca il giocatore " + (gioc + 1).ToString() + ".\n"));
                 //Preparo la stringa per comunicare, devo rimpiazzare i caratteri nulli con trattini sennò poi vengono persi quando converto in stringa per stampare
                 List<char> supert = new List<char>();
                 foreach (char c in stringaGenerata)
@@ -194,7 +194,7 @@ namespace Parolando
         }
 
         //Eventi
-        public void ComunicaConForm(StringEventArgs e)
+        private void ComunicaConForm(StringEventArgs e)
         {
             EventHandler handler = Comunica;
             if (handler != null)

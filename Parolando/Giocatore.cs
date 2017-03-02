@@ -62,7 +62,8 @@ namespace Parolando
         //Pensa cosa fare!
         public string Pensa(Trie albero, char[] Generata)
         {
-            List<Parola> ris = albero.Cerca(string.Join("", sacchetto));
+
+            List<Parola> ris = albero.Cerca(Unisci(Generata,sacchetto));
             List<Parola> copy = new List<Parola>();
             foreach (Parola pp in ris)
             {
@@ -99,15 +100,10 @@ namespace Parolando
             {
                 ris.Add(p);
             }
-            //se ris è vuoto e in questo turno non ho ancora svuotato il sacchetto, ritorno null così posso farlo
+            //se ris è vuoto e in questo turno non ho ancora mai svuotato il sacchetto, ritorno null così posso farlo
             if (ris.Count == 0 && !mulligato)
             {
                 return null;
-            }
-            //altrimenti cerco una parola valida che finisca prima del carattere vincolante
-            else if (mulligato == true)
-            {
-                ris = RicercaCorta(albero, Generata);
             }
             string r = PensaDiPiu(ris);
             return r;
@@ -154,34 +150,20 @@ namespace Parolando
             this.mulligato = true;
         }
 
-        //Ricerca solo le parole che ci "stanno" prima del carattere vincolante e sono più lunghe di 1
-        private List<Parola> RicercaCorta(Trie albero, char[] generata)
+        private string Unisci(char[] Generata, List<string> sacchetto)
         {
-            List<Parola> ris = albero.Cerca(string.Join("", sacchetto));
-            List<Parola> copy = new List<Parola>();
-            foreach (Parola pp in ris)
+
+            string tmp = "";
+            for(int a = 0; a < Generata.Length; a++)
             {
-                copy.Add(pp);
-            }
-            int pos = 0;
-            //trovo la posizione del carattere vincolante
-            for (int a = 0; a < generata.Length; a++)
-            {
-                if (generata[a] != '\0')
+                if(Generata[a] != '\0')
                 {
-                    pos = a;
+                    tmp = string.Join("", Generata[a]);
                 }
             }
-            pos++;
-            foreach (Parola p in ris)
-            {
-                if (p.parola.Length >= pos || p.parola.Length == 1)
-                {
-                    copy.Remove(p);
-                    continue;
-                }
-            }
-            return copy;
+            string ris = string.Join("", sacchetto);
+            ris += tmp;
+            return ris;
         }
     }
 }
