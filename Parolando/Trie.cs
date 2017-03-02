@@ -73,6 +73,7 @@ namespace Parolando
 
     internal class Trie
     {
+        //"I'm grooot!"
         private TrieNode groot;
 
         public Trie()
