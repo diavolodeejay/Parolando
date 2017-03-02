@@ -130,9 +130,12 @@ namespace Parolando
         //Genera la lettera vincolante e mette un "!" nella casella bonus
         public char[] GeneraTurno()
         {
-            int n = rnd.Next(0, 26);
-            n = n + 97;
-            char r = Convert.ToChar(n);
+            int n = rnd.Next(0, 5);
+            Dictionary<int, char> Converti = new Dictionary<int, char>()
+            {
+                {0,'a'}, {1,'e'}, {2,'i'}, {3,'o'}, {4,'u'}
+            };
+            char r = Converti[n];
             int p = rnd.Next(0, 8);
             char[] ris = new char[8];
             int bonus = rnd.Next(0, 8);

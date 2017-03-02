@@ -92,6 +92,7 @@ namespace Parolando
                     continue;
                 }
             }
+            
             ris.Clear();
             //risposto tutto su ris.
             foreach (Parola p in copy)
@@ -116,6 +117,8 @@ namespace Parolando
         //Restituisce la parola
         public string PensaDiPiu(List<Parola> parole)
         {
+            //TODO: RIFALLO PERCHE' LA LETTERA  VINCOLANTE DEVE ESSERCI. E NON DEVE ESSERE SOSTITUITA
+            //DIOCANE
             int[] Punti = new int[parole.Count];
             for (int a = 0; a < parole.Count; a++)
             {
