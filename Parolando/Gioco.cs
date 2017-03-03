@@ -8,7 +8,7 @@ namespace Parolando
 
     internal class Gioco
     {
-        //Per comicare con il form!
+        //Per comunicare con il form!
         public EventHandler Comunica;
 
         //Metodo che carica il file XML
