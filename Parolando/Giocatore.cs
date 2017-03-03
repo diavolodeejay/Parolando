@@ -62,8 +62,7 @@ namespace Parolando
         //Pensa cosa fare!
         public string Pensa(Trie albero, char[] Generata)
         {
-
-            List<Parola> ris = albero.Cerca(Unisci(Generata,sacchetto));
+            List<Parola> ris = albero.Cerca(Unisci(Generata, sacchetto));
             List<Parola> copy = new List<Parola>();
             foreach (Parola pp in ris)
             {
@@ -93,7 +92,7 @@ namespace Parolando
                     continue;
                 }
             }
-            
+
             ris.Clear();
             //risposto tutto su ris.
             foreach (Parola p in copy)
@@ -113,8 +112,6 @@ namespace Parolando
         //Restituisce la parola
         public string PensaDiPiu(List<Parola> parole)
         {
-            //TODO: RIFALLO PERCHE' LA LETTERA  VINCOLANTE DEVE ESSERCI. E NON DEVE ESSERE SOSTITUITA
-            //DIOCANE
             int[] Punti = new int[parole.Count];
             for (int a = 0; a < parole.Count; a++)
             {
@@ -152,11 +149,10 @@ namespace Parolando
 
         private string Unisci(char[] Generata, List<string> sacchetto)
         {
-
             string tmp = "";
-            for(int a = 0; a < Generata.Length; a++)
+            for (int a = 0; a < Generata.Length; a++)
             {
-                if(Generata[a] != '\0')
+                if (Generata[a] != '\0')
                 {
                     tmp = string.Join("", Generata[a]);
                 }

@@ -25,6 +25,10 @@ namespace Parolando
             {
                 return mlettere;
             }
+            set
+            {
+                mlettere = value;
+            }
         }
 
         public List<Parola> Parole
@@ -68,8 +72,6 @@ namespace Parolando
             return Convert.ToInt32(v) - 97;
         }
     }
-
-
 
     internal class Trie
     {

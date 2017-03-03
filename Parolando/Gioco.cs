@@ -10,6 +10,7 @@ namespace Parolando
     {
         //Per comicare con il form!
         public EventHandler Comunica;
+
         //Metodo che carica il file XML
         public void Carica()
         {
